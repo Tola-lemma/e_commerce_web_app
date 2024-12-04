@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import { CircularProgress, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { colors, NAME } from "./Constants/constant";
+import Layout from "./Pages/Layout";
 // import ProtectedRoute from "./ProtectedRoute";
 const SignUp = lazy(()=>import('./Pages/Auth/SignUp'));
 const Home = lazy(()=>import('./Pages/Home/Home'));
@@ -82,10 +83,11 @@ const containerStyle = {
       return (
         <>
           <Suspense fallback={<LoadingPage />}>
-            <Routes>
-              <Route exact path="/" element={<Home />} />
-              <Route exact path="/signup" element={<SignUp />} />
-              {/* <Route
+            <Layout>
+              <Routes>
+                <Route exact path="/" element={<Home />} />
+                <Route exact path="/signup" element={<SignUp />} />
+                {/* <Route
                 path="/app"
                 element={
                    <ProtectedRoute>
@@ -93,7 +95,8 @@ const containerStyle = {
                   </ProtectedRoute>
                 }
               /> */}
-            </Routes>
+              </Routes>
+            </Layout>
           </Suspense>
         </>
       );
