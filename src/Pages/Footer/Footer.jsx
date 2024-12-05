@@ -171,7 +171,7 @@ export const Footer = () => {
             variant="h7"
             noWrap
             component="a"
-            href="#"
+            href="/signup"
             sx={{
                   display: 'flex',
                   fontFamily: 'Poppins',
