@@ -5,14 +5,14 @@ import React from 'react'
 const pages = ['Home', 'Contact', 'About', 'Sign Up'];
 export const MainHeader = () => {
   return (
-      <AppBar position="sticky" color='white'>
+      <AppBar position="sticky" sx={{backgroundColor:"white", boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
             variant="h6"
             noWrap
             component="a"
-            href="#"
+            href="/"
             sx={{
               mr: 2,
               display: 'flex',
