@@ -1,14 +1,22 @@
-import React, { useState } from 'react'
-import {Box,Button,Grid,TextField, Typography} from '@mui/material'
+import React, { useContext, useState } from 'react'
+import {Box,Button,FormControlLabel,Radio,RadioGroup,TextField, Typography} from '@mui/material'
+import Grid from '@mui/material/Grid2';
 import sideImage from '../../Assets/Side Image.png'
 import GoogleIcon from '../../Assets/Icon-Google.png'
+import { useNavigate } from 'react-router-dom';
+import { useUserSignUpMutation } from '../../Features/userApiSlice';
+import { ErrorContext } from '../ToastErrorPage/ErrorContext';
 const SignUp = () => {
+  const navigate = useNavigate()
+  const [userSignUp] =useUserSignUpMutation()
+  const { showSuccess,showError } = useContext(ErrorContext);
   const [formData, setFormData] = useState({
     name: '',
-    emailOrPhone: '',
+    email: '',
+    phone: '',
     password: '',
+    method: 'email', // Default to email
   });
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -16,12 +24,27 @@ const SignUp = () => {
       [name]: value,
     });
   };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add form submission logic here (e.g., API call)
-    console.log('Form Data:', formData);
+  const handleMethodChange = (e) => {
+    setFormData({
+      ...formData,
+      method: e.target.value,
+      email: e.target.value === 'email' ? formData.email : '',
+      phone: e.target.value === 'phone' ? formData.phone : '',
+    });
   };
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+    const result = await userSignUp(formData)
+    if(result?.data){
+      localStorage.setItem('formData', JSON.stringify(formData));
+      showSuccess('You are Successfully create an account now sign in to continue --> Redirecting to login page')
+      navigate('/login');
+    }
+    else{
+      showError('Error while creating an account please try again...')
+    }
+  };
+
   return (
    <Box sx={{display:"flex"}} mt={8} gap={5}>
       <Box>
@@ -41,11 +64,11 @@ const SignUp = () => {
       }}
     >
    <Typography  sx={{textAlign:"center",fontSize:16,marginBottom:6,opacity:"90%",fontFamily:"Poppins"}}>Enter your details below</Typography>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
+      <Grid container spacing={2} >
+        <Grid item xs={12} size={12}>
           <TextField
             fullWidth
-            label="Name"
+            label="UserName"
             name="name"
             value={formData.name}
             onChange={handleChange}
@@ -58,24 +81,28 @@ const SignUp = () => {
             }}
           />
         </Grid>
-        <Grid item xs={12}>
-          <TextField
-            fullWidth
-            label="Email or Phone Number"
-            name="emailOrPhone"
-            value={formData.emailOrPhone}
-            onChange={handleChange}
-            required
-            type="text"
-            sx={{
-              "& fieldset": { 
-                border: 'none',               
-                borderBottom: '2px solid rgb(228 200 228)',
-               },
-            }}
-          />
-        </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} size={12}>
+              <RadioGroup row value={formData.method} onChange={handleMethodChange}>
+                <FormControlLabel value="email" control={<Radio />} label="Email" />
+                <FormControlLabel value="phone" control={<Radio />} label="Phone" />
+              </RadioGroup>
+              <TextField
+                fullWidth
+                label={formData.method === 'email' ? 'Email' : 'Phone Number'}
+                name={formData.method}
+                value={formData.method === 'email' ? formData.email : formData.phone}
+                onChange={handleChange}
+                required
+                type={formData.method === 'email' ? 'email' : 'tel'}
+                sx={{
+                  '& fieldset': {
+                    border: 'none',
+                    borderBottom: '2px solid rgb(228 200 228)',
+                  },
+                }}
+              />
+            </Grid>
+        <Grid item xs={12} size={12}>
           <TextField
             fullWidth
             label="Password"
@@ -127,7 +154,7 @@ const SignUp = () => {
       <img src={GoogleIcon} alt='google' width={20} height={20}/> <span> <span style={{color:"white"}}> -- </span></span>  Sign Up With Google
       </Button>
       <Typography variant="body2" color="initial" sx={{textAlign:"center",fontFamily:"Poppins",marginTop:4}}>
-        Already have an Account?  <a href='/' style={{color:"black",fontWeight:"bold"}}>Log In  </a>
+        Already have an Account?  <a href='/login' style={{color:"black",fontWeight:"bold"}}>Log In  </a>
       </Typography>
     </Box>
       </Box>
