@@ -13,7 +13,7 @@ export const Footer = () => {
             variant="h6"
             noWrap
             component="a"
-            href="#"
+            href="/home"
             sx={{
                   display: 'flex',
                   fontFamily: 'Poppins',
@@ -171,7 +171,7 @@ export const Footer = () => {
             variant="h7"
             noWrap
             component="a"
-            href="/signup"
+            href="/"
             sx={{
                   display: 'flex',
                   fontFamily: 'Poppins',
