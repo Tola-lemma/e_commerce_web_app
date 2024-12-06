@@ -4,9 +4,11 @@ import { CircularProgress, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { colors, NAME } from "./Constants/constant";
 import Layout from "./Pages/Layout";
-// import ProtectedRoute from "./ProtectedRoute";
+import { ErrorProvider } from "./Pages/ToastErrorPage/ErrorContext";
+import ProtectedRoute from "./ProtectedRoute";
 const SignUp = lazy(()=>import('./Pages/Auth/SignUp'));
 const Home = lazy(()=>import('./Pages/Home/Home'));
+const LogIn = lazy(()=>import('./Pages/Auth/LogIn'))
 const containerStyle = {
       position: "fixed",
       zIndex: 10000,
@@ -61,19 +63,19 @@ const containerStyle = {
 
     export const route = [
       {
-        path: "/signup",
+        path: "/",
         exact: true,
         element: <SignUp />,
       },
       {
-        path: "/",
+        path: "/home",
         exact: true,
         element: <Home />,
       },
       {
-        // path:'/',
-        // exact:true,
-        // element:<Login/>
+        path:'/login',
+        exact:true,
+        element:<LogIn/>
 
       },
       
@@ -83,10 +85,17 @@ const containerStyle = {
       return (
         <>
           <Suspense fallback={<LoadingPage />}>
+          <ErrorProvider>
             <Layout>
               <Routes>
-                <Route exact path="/" element={<Home />} />
-                <Route exact path="/signup" element={<SignUp />} />
+                <Route exact path="/home" element={
+                  <ProtectedRoute>
+                  <Home />
+                  </ProtectedRoute>
+                  } 
+                  />
+                <Route exact path="/" element={<SignUp />} />
+                <Route exact path="/login" element={<LogIn />} />
                 {/* <Route
                 path="/app"
                 element={
@@ -97,6 +106,7 @@ const containerStyle = {
               /> */}
               </Routes>
             </Layout>
+            </ErrorProvider>
           </Suspense>
         </>
       );
