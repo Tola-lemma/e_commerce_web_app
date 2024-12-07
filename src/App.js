@@ -6,6 +6,7 @@ import { colors, NAME } from "./Constants/constant";
 import Layout from "./Pages/Layout";
 import { ErrorProvider } from "./Pages/ToastErrorPage/ErrorContext";
 import ProtectedRoute from "./ProtectedRoute";
+import NotFoundPage from "./Pages/404/404";
 const SignUp = lazy(()=>import('./Pages/Auth/SignUp'));
 const Home = lazy(()=>import('./Pages/Home/Home'));
 const LogIn = lazy(()=>import('./Pages/Auth/LogIn'))
@@ -95,6 +96,7 @@ const containerStyle = {
           <ErrorProvider>
             <Layout>
               <Routes>
+              <Route exact path="*" element={<NotFoundPage/>} />
                 <Route exact path="/home" element={
                   <ProtectedRoute>
                   <Home />
