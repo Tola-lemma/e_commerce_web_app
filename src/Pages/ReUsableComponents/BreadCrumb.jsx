@@ -28,7 +28,7 @@ const CustomBreadcrumbs = ({ items, onClick }) => {
           </Link>
 
           {/* Dynamically Rendered Breadcrumbs */}
-          {items.map((item, index) =>
+          {items?.map((item, index) =>
             item.href ? (
               <Link
                 key={index}
