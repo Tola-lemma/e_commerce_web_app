@@ -9,6 +9,7 @@ import ProtectedRoute from "./ProtectedRoute";
 const SignUp = lazy(()=>import('./Pages/Auth/SignUp'));
 const Home = lazy(()=>import('./Pages/Home/Home'));
 const LogIn = lazy(()=>import('./Pages/Auth/LogIn'))
+const ProductDetails = lazy(()=>import('./Pages/Product/ProductDetails'))
 const containerStyle = {
       position: "fixed",
       zIndex: 10000,
@@ -78,6 +79,12 @@ const containerStyle = {
         element:<LogIn/>
 
       },
+      {
+        path:'/product-details',
+        exact:true,
+        element:<ProductDetails/>
+
+      },
       
     ];
     
@@ -96,6 +103,7 @@ const containerStyle = {
                   />
                 <Route exact path="/" element={<SignUp />} />
                 <Route exact path="/login" element={<LogIn />} />
+                <Route exact path="/product-details" element={<ProductDetails />} />
                 {/* <Route
                 path="/app"
                 element={
