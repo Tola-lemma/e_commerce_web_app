@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, CircularProgress, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 import HomePageImg from '../../Assets/home/Frame 560.png'
@@ -7,21 +7,24 @@ import HomePageImg2 from '../../Assets/home/shopnow.png'
 import HomePageImg3 from '../../Assets/home/wirelessheadphone.png'
 import { useGetAllProductQuery, useGetProductCategoryQuery } from '../../Features/productApiSlice';
 import { ArrowForward, KeyboardArrowRight } from '@mui/icons-material';
+import ImageCards from '../ReUsableComponents/ReusableCard.jsx'
+import SkeletonCard from '../ReUsableComponents/SkeletonCard.jsx';
+import SkeletonCategory from '../ReUsableComponents/ReUsableCategorySkeleton.jsx';
 const Home = () => {
   const { data: categories, error, isLoading }  = useGetProductCategoryQuery();
-  const {response } = useGetAllProductQuery()
-
-  if (error) {
-    // Handle different types of errors
-    if (error.status === 500) {
-      return <p>Server error: 500 Internal Server Error</p>;
-    }
-    if (error.status === 404) {
-      return <p>Not Found: The endpoint may be incorrect</p>;
-    }
-    return <p>An unexpected error occurred: {error.error || 'Unknown Error'}</p>;
-  }
+  const {data:response,isLoading:isLoadingProduct, error:errorProduct } = useGetAllProductQuery()
+  const cardData =
+    response?.data.map((item) => ({
+      imageSrc: item.image, 
+      description:item.description,
+      title: item.title, 
+      category: item.category,
+      price: item.price,
+      rate: item.rate,
+      ratingCount: item.ratingCount 
+    })) || [];
   return (
+    <>
    <Box sx={{
       width: "100%",
       display:"flex",
@@ -35,10 +38,7 @@ const Home = () => {
      paddingRight: 1,
    }}>
         {isLoading ? (
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <CircularProgress size={24} />
-            <Typography>Loading...</Typography>
-          </Box>
+          <SkeletonCategory/>
         ) : (
           categories &&
           categories.map((category, index) => (
@@ -67,6 +67,7 @@ const Home = () => {
           </Box>
           ))
         )}
+        {error&& <p style={{color:"red",fontSize:"24px",textAlign:"center"}}>An unexpected error occurred: {error.error || 'Unknown Error'}</p>}
       </Box>
 
       <Box sx={{ width: 892, height: 344, overflow: 'hidden',position:"relative"}}>
@@ -116,6 +117,15 @@ const Home = () => {
       </Box>
    
    </Box>
+   <ImageCards cardData={cardData}/>
+   {isLoadingProduct&&<SkeletonCard />}
+   {errorProduct&&<h1 style={{color:"red",fontSize:"24px",textAlign:"center"}}>An unexpected error occurred: {errorProduct.error || 'Unknown Error'}</h1>}
+   {/* {response&&response.data.map((item,index)=>(
+    <p key={index}>
+         <img src={item.image} alt="mkkmkm"  />
+    </p>
+   ))} */}
+   </>
   )
 }
 export default Home
