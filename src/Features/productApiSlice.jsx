@@ -26,6 +26,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
                             }
                     // Extract the data from each item in the response array
                     const data = response.map((item) => ({
+                       id:item.id,
                        category:item.category,
                        description:item.description,
                        image:item.image,
@@ -57,6 +58,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
                             }
                     // Extract the data from each item in the response array
                     const data = response.map((item) => ({
+                       id:item.id,
                        category:item.category,
                        description:item.description,
                        image:item.image,
@@ -66,7 +68,6 @@ export const productApiSlice = apiSlice.injectEndpoints({
                        rate:item.rating.rate,
 
                     }));
-                    console.log("data",data);
                     // Return the transformed data
                     return {
                       data
