@@ -42,11 +42,44 @@ export const productApiSlice = apiSlice.injectEndpoints({
                   },
                   invalidatesTags:['e-commerce']
             }),
+            getProductByCategory: builder.query({
+                  query: (query) => {
+                    const { category } = query;
+                    return {
+                      url: `/products/category/${category}`,
+                    };
+                  },
+                  transformResponse: (response) => {
+                        if (!Array.isArray(response) || response.length === 0) {
+                              throw new Error(
+                                "Error Loading products by category or empty response"
+                              );
+                            }
+                    // Extract the data from each item in the response array
+                    const data = response.map((item) => ({
+                       category:item.category,
+                       description:item.description,
+                       image:item.image,
+                       price:item.price,
+                       title:item.title,
+                       ratingCount:item.rating.count,
+                       rate:item.rating.rate,
+
+                    }));
+                    console.log("data",data);
+                    // Return the transformed data
+                    return {
+                      data
+                    };
+                  },
+                  invalidatesTags:['e-commerce']
+            }),
             
             //more
       })
 })
 export const {
 useGetProductCategoryQuery,
-useGetAllProductQuery
+useGetAllProductQuery,
+useGetProductByCategoryQuery
 } = productApiSlice
