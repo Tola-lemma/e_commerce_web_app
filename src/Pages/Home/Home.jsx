@@ -5,17 +5,32 @@ import '@splidejs/react-splide/css';
 import HomePageImg from '../../Assets/home/Frame 560.png'
 import HomePageImg2 from '../../Assets/home/shopnow.png'
 import HomePageImg3 from '../../Assets/home/wirelessheadphone.png'
-import { useGetAllProductQuery, useGetProductCategoryQuery } from '../../Features/productApiSlice';
-import { ArrowBack, ArrowForward, KeyboardArrowRight } from '@mui/icons-material';
+import { useGetAllProductQuery, useGetProductByCategoryQuery, useGetProductCategoryQuery } from '../../Features/productApiSlice';
+import { ArrowBack, ArrowForward, Boy, Diamond, ElectricalServices, Girl, KeyboardArrowRight } from '@mui/icons-material';
 import ImageCards from '../ReUsableComponents/ReusableCard.jsx'
 import SkeletonCategory from '../ReUsableComponents/ReUsableCategorySkeleton.jsx';
 import LoadingSkeleton from '../ReUsableComponents/FixedTextSkeleton.jsx';
+import { HashLink as Link } from "react-router-hash-link";
 const Home = () => {
   const [page, setPage] = useState(1); // Start from page 1
   const cardsPerPage = 4; // Number of cards to display at once
   const [viewAll, setViewAll] = useState(false);
   const { data: categories, error, isLoading }  = useGetProductCategoryQuery();
   const {data:products,isLoading:isLoadingProduct, error:errorProduct } = useGetAllProductQuery()
+  const [selectedCategory, setSelectedCategory] = useState("electronics");
+  const {data:getProductByCategory,isLoading:categoryLoading,error:getCategoryError} = useGetProductByCategoryQuery(
+    { category: selectedCategory }, // Pass selected category to API query
+    { skip: !selectedCategory }
+  );
+const categoryData=getProductByCategory?.data.map((item) => ({
+  imageSrc: item.image, 
+  description:item.description,
+  title: item.title, 
+  category: item.category,
+  price: item.price,
+  rate: item.rate,
+  ratingCount: item.ratingCount 
+})) || [];
   const cardData =
   products?.data.map((item) => ({
       imageSrc: item.image, 
@@ -26,7 +41,12 @@ const Home = () => {
       rate: item.rate,
       ratingCount: item.ratingCount 
     })) || [];
-
+ const handleCategoryClick = (category) => {
+    setSelectedCategory(category); // Set selected category on button click
+  };
+  const browseHandlerbyId = (category)=>{
+    setSelectedCategory(category);
+  }
  // Calculate the data to display for the current page
  const paginatedData = cardData.slice(
   (page - 1) * cardsPerPage,
@@ -123,15 +143,21 @@ const handlePrev = () => {
                 }}
               >
                 <Typography
+                component={Link}
+                to={`#${category}`}
+                smooth
                   sx={{
                     fontFamily: "Poppins",
                     fontSize: 18,
                     textTransform: "capitalize",
+                    textDecoration:"none",
+                    color: selectedCategory === category ? "blue" : "black"
                   }}
+                  onClick={()=>browseHandlerbyId(category)}
                 >
-                  {category}
+                {category}
                 </Typography>
-                <KeyboardArrowRight />
+               <Link to={`#${category}`}> <KeyboardArrowRight sx={{color:'black'}} onClick={()=>browseHandlerbyId(category)}/></Link>
               </Box>
             ))
           )}
@@ -207,8 +233,182 @@ const handlePrev = () => {
         </Box>
       </Box>
       <Box>
-      {isLoadingProduct ? <LoadingSkeleton/> :<>
-        <Box mt={18}>
+        {isLoadingProduct ? (
+          <LoadingSkeleton />
+        ) : (
+          <>
+            <Box mt={18}>
+              <Typography
+                variant="body1"
+                color="initial"
+                sx={{
+                  color: "#DB4444",
+                  fontFamily: "Poppins",
+                  fontSize: "18px",
+                  borderLeft: "10px solid #DB4444",
+                  padding: 1,
+                  marginLeft: "6px",
+                }}
+              >
+                Today's
+              </Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Typography
+                  variant="body1"
+                  color="initial"
+                  sx={{
+                    fontWeight: "bold",
+                    fontFamily: "Poppins",
+                    fontSize: "36px",
+                    padding: 1,
+                    lineHeight: "48px",
+                    letterSpacing: "4%",
+                  }}
+                >
+                  Flash Sales
+                </Typography>
+                <Box sx={{ width: 900, display: "flex", gap: 2 }}>
+                  {/* Day Section */}
+                  <Box
+                    sx={{
+                      textAlign: "center",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{ fontSize: "16px", fontWeight: "bold" }}
+                    >
+                      Days
+                    </Typography>
+                    <Typography
+                      variant="h4"
+                      color="text.primary"
+                      sx={{ fontFamily: "Poppins", fontWeight: "bold" }}
+                    >
+                      {timeLeft.days} :
+                    </Typography>
+                  </Box>
+
+                  {/* Hours Section */}
+                  <Box
+                    sx={{
+                      textAlign: "center",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{ fontSize: "16px", fontWeight: "bold" }}
+                    >
+                      Hours
+                    </Typography>
+                    <Typography
+                      variant="h4"
+                      color="text.primary"
+                      sx={{ fontFamily: "Poppins", fontWeight: "bold" }}
+                    >
+                      {timeLeft.hours} :
+                    </Typography>
+                  </Box>
+
+                  {/* Minutes Section */}
+                  <Box
+                    sx={{
+                      textAlign: "center",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{ fontSize: "16px", fontWeight: "bold" }}
+                    >
+                      Minutes
+                    </Typography>
+                    <Typography
+                      variant="h4"
+                      color="text.primary"
+                      sx={{ fontFamily: "Poppins", fontWeight: "bold" }}
+                    >
+                      {timeLeft.minutes} :
+                    </Typography>
+                  </Box>
+
+                  {/* Seconds Section */}
+                  <Box
+                    sx={{
+                      textAlign: "center",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{ fontSize: "16px", fontWeight: "bold" }}
+                    >
+                      Seconds
+                    </Typography>
+                    <Typography
+                      variant="h4"
+                      color="text.primary"
+                      sx={{ fontFamily: "Poppins", fontWeight: "bold" }}
+                    >
+                      {timeLeft.seconds}
+                    </Typography>
+                  </Box>
+                </Box>
+                <p style={{ marginRight: 8 }}>
+                  <IconButton
+                    onClick={handlePrev}
+                    disabled={page === 1 || viewAll}
+                  >
+                    <ArrowBack />
+                  </IconButton>
+                  <IconButton
+                    onClick={handleNext}
+                    disabled={page === totalPages || viewAll}
+                  >
+                    <ArrowForward />
+                  </IconButton>
+                </p>
+              </Box>
+            </Box>
+            <ImageCards cardData={viewAll ? cardData : paginatedData} />
+            {/* Show All Button */}
+            <Box textAlign="center">
+              <Button
+                variant="contained"
+                sx={{
+                  backgroundColor: "#DB4444",
+                  textAlign: "center",
+                  textTransform: "none",
+                }}
+                onClick={() => {
+                  setViewAll(!viewAll);
+                  if (viewAll) setPage(1);
+                }}
+              >
+                {viewAll ? "View Less" : "View All Products"}
+              </Button>
+            </Box>
+          </>
+        )}
+
+  {categoryLoading? <LoadingSkeleton/>:(<>
+        <Box mt={12}>
           <Typography
             variant="body1"
             color="initial"
@@ -221,156 +421,75 @@ const handlePrev = () => {
               marginLeft: "6px",
             }}
           >
-            Today's
+            Categories
           </Typography>
-          <Box
+          <Typography
+            variant="body1"
+            color="initial"
             sx={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
+              fontWeight: "bold",
+              fontFamily: "Poppins",
+              fontSize: "36px",
+              padding: 1,
+              lineHeight: "48px",
+              letterSpacing: "4%",
             }}
           >
-            <Typography
-              variant="body1"
-              color="initial"
+            Browse By Categories
+          </Typography>
+          <Box  sx={{display:"flex",gap:4,justifyContent:"center",
+           flexDirection: "row",
+           flexWrap: "wrap", }}  id="browse-by-category" >
+           { categories &&
+            categories.map((category, index) => (
+            <Button
+             id={`${category}`} 
+            key={index}
               sx={{
-                fontWeight: "bold",
-                fontFamily: "Poppins",
-                fontSize: "36px",
-                padding: 1,
-                lineHeight: "48px",
-                letterSpacing: "4%",
+                width: 175,
+                height: 145,
+                border: "1px solid #1E1E1E",
+                textTransform:"capitalize",
+                fontFamily:"Poppins",
+                fontSize:16,
+                color:"black",
+                flexDirection: "column", 
+                alignItems: "center", 
+                justifyContent: "center", 
+                gap: 1, 
+                backgroundColor: selectedCategory === category ? "#DB4444" : "none",
               }}
+              onClick={() => handleCategoryClick(category)} 
             >
-              Flash Sales
-            </Typography>
-            <Box sx={{ width: 900, display: "flex", gap: 2 }}>
-              {/* Day Section */}
-              <Box
-                sx={{
-                  textAlign: "center",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{ fontSize: "16px", fontWeight: "bold" }}
-                >
-                  Days
-                </Typography>
-                <Typography
-                  variant="h4"
-                  color="text.primary"
-                  sx={{ fontFamily: "Poppins", fontWeight: "bold" }}
-                >
-                  {timeLeft.days} :
-                </Typography>
-              </Box>
-
-              {/* Hours Section */}
-              <Box
-                sx={{
-                  textAlign: "center",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{ fontSize: "16px", fontWeight: "bold" }}
-                >
-                  Hours
-                </Typography>
-                <Typography
-                  variant="h4"
-                  color="text.primary"
-                  sx={{ fontFamily: "Poppins", fontWeight: "bold" }}
-                >
-                  {timeLeft.hours} :
-                </Typography>
-              </Box>
-
-              {/* Minutes Section */}
-              <Box
-                sx={{
-                  textAlign: "center",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{ fontSize: "16px", fontWeight: "bold" }}
-                >
-                  Minutes
-                </Typography>
-                <Typography
-                  variant="h4"
-                  color="text.primary"
-                  sx={{ fontFamily: "Poppins", fontWeight: "bold" }}
-                >
-                  {timeLeft.minutes} :
-                </Typography>
-              </Box>
-
-              {/* Seconds Section */}
-              <Box
-                sx={{
-                  textAlign: "center",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{ fontSize: "16px", fontWeight: "bold" }}
-                >
-                  Seconds
-                </Typography>
-                <Typography
-                  variant="h4"
-                  color="text.primary"
-                  sx={{ fontFamily: "Poppins", fontWeight: "bold" }}
-                >
-                  {timeLeft.seconds}
-                </Typography>
-              </Box>
+              {(category ==='electronics')&&  <ElectricalServices sx={{ fontSize: 40 }} />}
+             {(category ==='jewelery')&& <Diamond sx={{ fontSize: 40 }}/>}
+             {(category ===`women's clothing`)&& <Girl sx={{ fontSize: 40 }}/>}
+             {(category ===`men's clothing`)&&<Boy sx={{ fontSize: 40 }}/>}
+              {category}
+            </Button>
+            ))}
             </Box>
-            <p style={{ marginRight: 8 }}>
-              <IconButton onClick={handlePrev} disabled={page === 1 ||viewAll}>
-                <ArrowBack />
-              </IconButton>
-              <IconButton onClick={handleNext} disabled={page === totalPages ||viewAll}>
-                <ArrowForward />
-              </IconButton>
-            </p>
-          </Box>
         </Box>
-        <ImageCards cardData={viewAll ? cardData : paginatedData} />
-        {/* Show All Button */}
-        <Box textAlign="center">
-          <Button
-            variant="contained"
+        <Typography
+            variant="body1"
+            color="initial"
             sx={{
-              backgroundColor: "#DB4444",
-              textAlign: "center",
-              textTransform: "none",
-            }}
-            onClick={() => {
-              setViewAll(!viewAll); 
-              if (viewAll) setPage(1); 
+              fontFamily: "Poppins",
+              fontSize: "18px",
+              borderLeft: "10px solid #00FF66",
+              padding: 1,
+              marginLeft: "8px",
+              marginTop:'15px',
+              textTransform:'capitalize',
+              color:"#00FF66",
+              fontWeight:'bold'
             }}
           >
-            {viewAll ? "View Less" : "View All Products"}
-          </Button>
-        </Box>
-        </>}  
-        {errorProduct && (
+            {selectedCategory}
+          </Typography>
+          </>)}
+        <ImageCards cardData={categoryData} />
+        {(errorProduct ||getCategoryError ) && (
           <h1 style={{ color: "red", fontSize: "24px", textAlign: "center" }}>
             An unexpected error occurred:{" "}
             {errorProduct.error || "Unknown Error"}
