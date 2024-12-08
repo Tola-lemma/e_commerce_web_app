@@ -7,16 +7,21 @@ const WishlistContext = createContext();
 export const WishlistProvider = ({ children }) => {
   const [wishlist, setWishlist] = useState([]);
 
-  // Add a product to the wishlist (but only if it isn't already there)
-  const addToWishlist = (product) => {
-    // If the product is not in the wishlist, add it
-    if (!wishlist.some((item) => item.id === product.id)) {
+  // Toggle a product in the wishlist (add if not exists, remove if exists)
+  const toggleWishlist = (product) => {
+    if (wishlist.some((item) => item.id === product.id)) {
+      // Remove from wishlist if it exists
+      setWishlist((prevWishlist) =>
+        prevWishlist.filter((item) => item.id !== product.id)
+      );
+    } else {
+      // Add to wishlist if it does not exist
       setWishlist((prevWishlist) => [...prevWishlist, product]);
     }
   };
 
   return (
-    <WishlistContext.Provider value={{ wishlist, addToWishlist }}>
+    <WishlistContext.Provider value={{ wishlist, toggleWishlist }}>
       {children}
     </WishlistContext.Provider>
   );
