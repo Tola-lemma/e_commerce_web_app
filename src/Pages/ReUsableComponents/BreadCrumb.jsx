@@ -4,7 +4,7 @@ import { NavigateNext } from "@mui/icons-material";
 
 const CustomBreadcrumbs = ({ items, onClick }) => {
   const handleClick = (event, href) => {
-    event.preventDefault();
+    // event.preventDefault();
     if (onClick) {
       onClick(href);
     }
