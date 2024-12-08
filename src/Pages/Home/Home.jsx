@@ -23,6 +23,7 @@ const Home = () => {
     { skip: !selectedCategory }
   );
 const categoryData=getProductByCategory?.data.map((item) => ({
+  id:item.id,
   imageSrc: item.image, 
   description:item.description,
   title: item.title, 
@@ -33,6 +34,7 @@ const categoryData=getProductByCategory?.data.map((item) => ({
 })) || [];
   const cardData =
   products?.data.map((item) => ({
+      id:item.id,
       imageSrc: item.image, 
       description:item.description,
       title: item.title, 
