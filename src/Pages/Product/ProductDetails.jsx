@@ -4,6 +4,7 @@ import { Box, Typography, Button, Card, Checkbox, Rating, IconButton } from "@mu
 import CustomBreadcrumbs from "../ReUsableComponents/BreadCrumb";
 import { Add, Brightness1Sharp, Favorite, FavoriteBorder, Remove } from "@mui/icons-material";
 import { useState } from "react";
+import { useCart } from "../Cart/CartContext";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 const ProductDetails = () => {
   const location = useLocation();
@@ -18,18 +19,28 @@ const ProductDetails = () => {
     const discountedPrice = totalPrice * 0.5;
     const handleIncrease = () => setQuantity((prev) => prev + 1);
     const handleDecrease = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+    const {setCart } = useCart();
     // buttons below carts details 
     const navigate = useNavigate()
     const handleBuyNow = () => {
-        const { title, category, imageSrc } = product;
-        navigate("/checkout", {
-          state: {
-            title,
-            category,
-            price: discountedPrice.toFixed(2),
-            imageSrc,
-          },
-        });
+      const updatedProduct = {
+        ...product,
+        quantity,
+      };
+    
+      setCart((prevCart) => {
+        const existingProduct = prevCart.find((item) => item.id === product.id);
+    
+        if (existingProduct) {
+          return prevCart.map((item) =>
+            item.id === product.id ? { ...item, quantity } : item
+          );
+        }
+    
+        return [...prevCart, updatedProduct];
+      });
+    
+      navigate("/cart");
       };
   return (
     <Box mt={6} mb={6}>
