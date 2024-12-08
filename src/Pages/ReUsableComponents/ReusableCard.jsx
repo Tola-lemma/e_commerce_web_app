@@ -10,9 +10,11 @@ import Favorite from "@mui/icons-material/Favorite";
 import { RemoveRedEye } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import  {useWishlist} from '../WishList/WishListContext'
+import { useCart } from "../Cart/CartContext";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 export default function ImageCards({cardData}) {
   const { wishlist, toggleWishlist } = useWishlist();
+  const { cart, addToCart } = useCart();
   const navigate = useNavigate();
   return (
     <Box
@@ -114,15 +116,20 @@ export default function ImageCards({cardData}) {
             }}
           >
             <Button
+              disabled={cart.some((item) => item.id === card.id)}
               size="large"
               sx={{
                 backgroundColor: "black",
                 color: "white",
                 textTransform: "none",
+                "&:disabled": {
+                  backgroundColor: "#DB4444", 
+                  color:'wheat'
+                },
               }}
-              // onClick={() => addToCart(card)}
+              onClick={() => addToCart(card)}
             >
-              Add to cart
+              {cart.some((item) => item.id === card.id) ? "Added to cart" : "Add to Cart"}
             </Button>
             <Typography
               gutterBottom
