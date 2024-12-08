@@ -10,6 +10,7 @@ import NotFoundPage from "./Pages/404/404";
 const SignUp = lazy(()=>import('./Pages/Auth/SignUp'));
 const Home = lazy(()=>import('./Pages/Home/Home'));
 const LogIn = lazy(()=>import('./Pages/Auth/LogIn'))
+const About = lazy(()=>import('./Pages/About/About'))
 const ProductDetails = lazy(()=>import('./Pages/Product/ProductDetails'))
 const containerStyle = {
       position: "fixed",
@@ -86,6 +87,12 @@ const containerStyle = {
         element:<ProductDetails/>
 
       },
+      {
+        path:'/about',
+        exact:true,
+        element:<About/>
+
+      },
       
     ];
     
@@ -106,6 +113,7 @@ const containerStyle = {
                 <Route exact path="/" element={<SignUp />} />
                 <Route exact path="/login" element={<LogIn />} />
                 <Route exact path="/product-details" element={<ProductDetails />} />
+                <Route exact path="/about" element={<About />} />
                 {/* <Route
                 path="/app"
                 element={
