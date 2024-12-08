@@ -38,6 +38,16 @@ const navigate = useNavigate()
   const breadcrumbsItems = [
       { name: "Cart" }
   ];
+  const handleProceedToCheckout = () => {
+      const checkoutData = {
+        cart,
+        subtotal,
+        shipping,
+        total,
+      };
+  
+      navigate("/checkout", { state: checkoutData });
+    };
   return (
     <Box sx={{ padding: "20px" }}>
       <Typography variant="p" gutterBottom>
@@ -197,6 +207,7 @@ const navigate = useNavigate()
                         textTransform: "none",
                         marginTop: "10px",
                       }}
+                      onClick={handleProceedToCheckout}
                     >
                       Proceed to Checkout
                     </Button>
