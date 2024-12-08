@@ -11,11 +11,14 @@ import { RemoveRedEye } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import  {useWishlist} from '../WishList/WishListContext'
 import { useCart } from "../Cart/CartContext";
+// import { useAddToCartMutation } from "../../Features/cartApiSlice";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 export default function ImageCards({cardData}) {
   const { wishlist, toggleWishlist } = useWishlist();
   const { cart, addToCart } = useCart();
   const navigate = useNavigate();
+  // const [carts,setCarts]=React.useState('')
+  // const {addToCart:addtoCartAPI } = useAddToCartMutation()
   return (
     <Box
       sx={{
