@@ -8,11 +8,13 @@ import { ErrorProvider } from "./Pages/ToastErrorPage/ErrorContext";
 import ProtectedRoute from "./ProtectedRoute";
 import NotFoundPage from "./Pages/404/404";
 import { WishlistProvider } from "./Pages/WishList/WishListContext";
-const  WishlistPage= lazy(()=>import("./Pages/WishList/WishListPage"));
-const SignUp = lazy(()=>import('./Pages/Auth/SignUp'));
-const Home = lazy(()=>import('./Pages/Home/Home'));
-const LogIn = lazy(()=>import('./Pages/Auth/LogIn'))
-const About = lazy(()=>import('./Pages/About/About'))
+import { CartProvider } from "./Pages/Cart/CartContext";
+const CartPage = lazy(() => import("./Pages/Cart/CartPage"));
+const WishlistPage = lazy(() => import("./Pages/WishList/WishListPage"));
+const SignUp = lazy(() => import("./Pages/Auth/SignUp"));
+const Home = lazy(() => import("./Pages/Home/Home"));
+const LogIn = lazy(() => import("./Pages/Auth/LogIn"));
+const About = lazy(() => import("./Pages/About/About"));
 const ProductDetails = lazy(()=>import('./Pages/Product/ProductDetails'))
 const containerStyle = {
       position: "fixed",
@@ -48,7 +50,7 @@ const containerStyle = {
                   fontWeight: "bold",
                   fontFamily: "Campton",
                   letterSpacing: "1px",
-                  color: colors.background.tertiary
+                  color: colors.background.black
                 }}
               >
                 {NAME}
@@ -56,7 +58,7 @@ const containerStyle = {
               <Typography
                 fontFamily="Campton"
                 variant="p"
-                sx={{ mt: 1 ,color: colors.background.tertiary}}
+                sx={{ mt: 1 ,color: colors.background.black}}
               >
                 Hold on, We are preparing your content...
               </Typography>
@@ -101,6 +103,12 @@ const containerStyle = {
         element:<WishlistPage/>
 
       },
+      {
+        path:'/cart',
+        exact:true,
+        element:<CartPage/>
+
+      },
       
     ];
     
@@ -109,6 +117,7 @@ const containerStyle = {
         <>
           <Suspense fallback={<LoadingPage />}>
           <ErrorProvider>
+          <CartProvider>
           <WishlistProvider>
             <Layout>
               <Routes>
@@ -124,6 +133,7 @@ const containerStyle = {
                 <Route exact path="/product-details" element={<ProductDetails />} />
                 <Route exact path="/about" element={<About />} />
                 <Route exact path="/wishlist" element={<WishlistPage />} />
+                <Route exact path="/cart" element={<CartPage />} />
                 {/* <Route
                 path="/app"
                 element={
@@ -135,6 +145,7 @@ const containerStyle = {
               </Routes>
             </Layout>
             </WishlistProvider>
+            </CartProvider>
             </ErrorProvider>
           </Suspense>
         </>
