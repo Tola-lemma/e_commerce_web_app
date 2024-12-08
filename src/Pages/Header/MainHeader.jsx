@@ -4,12 +4,14 @@ import React, { useEffect, useState } from 'react'
 import shopingIcon from '../../Assets/header/Cart1.png'
 import loveIcon from '../../Assets/header/Vector.png'
 import userIcon from '../../Assets/header/user.png'
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useWishlist } from '../WishList/WishListContext';
 const pages = ['Home', 'Contact', 'About', 'Sign Up'];
 export const MainHeader = () => {
   const location = useLocation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  const { wishlist } = useWishlist();
+  const navigate = useNavigate()
   useEffect(() => {
     const username = localStorage.getItem('username');
     const loggedIn = !!username; // Boolean conversion
@@ -86,9 +88,9 @@ export const MainHeader = () => {
           </IconButton>
           </Box>
          {isLoggedIn&&<Box ml={4}>
-          <IconButton>
+          <IconButton onClick={() => navigate("/wishlist")}>
             <Badge
-              badgeContent={2}
+              badgeContent={wishlist?.length}
               sx={{
                 "& .MuiBadge-badge": {
                   color: "white",
