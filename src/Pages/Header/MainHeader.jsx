@@ -6,11 +6,13 @@ import loveIcon from '../../Assets/header/Vector.png'
 import userIcon from '../../Assets/header/user.png'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useWishlist } from '../WishList/WishListContext';
+import { useCart } from '../Cart/CartContext';
 const pages = ['Home', 'Contact', 'About', 'Sign Up'];
 export const MainHeader = () => {
   const location = useLocation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { wishlist } = useWishlist();
+  const { cart } = useCart();
   const navigate = useNavigate()
   useEffect(() => {
     const username = localStorage.getItem('username');
@@ -102,9 +104,9 @@ export const MainHeader = () => {
               <img src={loveIcon} height={26} width={26} alt='favoriteIcon' />
             </Badge>
             </IconButton>
-            <IconButton>
+            <IconButton onClick={() => navigate("/cart")}>
             <Badge
-              badgeContent={2}
+              badgeContent={cart?.length}
               sx={{
                 "& .MuiBadge-badge": {
                   color: "white",
