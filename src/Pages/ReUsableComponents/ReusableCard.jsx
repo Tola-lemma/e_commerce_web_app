@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import  {useWishlist} from '../WishList/WishListContext'
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 export default function ImageCards({cardData}) {
-  const { wishlist, addToWishlist } = useWishlist();
+  const { wishlist, toggleWishlist } = useWishlist();
   const navigate = useNavigate();
   return (
     <Box
@@ -71,7 +71,7 @@ export default function ImageCards({cardData}) {
               {...label}
               icon={<RemoveRedEye sx={{ width: 20, height: 20 }} />}
               checked={wishlist.some((item) => item.id === card.id)} // Check if the card is in the wishlist
-              onClick={() => addToWishlist(card)} // Add the card to the wishlist
+              onClick={() => toggleWishlist(card)} // Add the card to the wishlist
             /></span>
           </Box>
           {/* Image Section */}
