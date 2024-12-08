@@ -7,6 +7,8 @@ import Layout from "./Pages/Layout";
 import { ErrorProvider } from "./Pages/ToastErrorPage/ErrorContext";
 import ProtectedRoute from "./ProtectedRoute";
 import NotFoundPage from "./Pages/404/404";
+import { WishlistProvider } from "./Pages/WishList/WishListContext";
+const  WishlistPage= lazy(()=>import("./Pages/WishList/WishListPage"));
 const SignUp = lazy(()=>import('./Pages/Auth/SignUp'));
 const Home = lazy(()=>import('./Pages/Home/Home'));
 const LogIn = lazy(()=>import('./Pages/Auth/LogIn'))
@@ -93,6 +95,12 @@ const containerStyle = {
         element:<About/>
 
       },
+      {
+        path:'/wishlist',
+        exact:true,
+        element:<WishlistPage/>
+
+      },
       
     ];
     
@@ -101,6 +109,7 @@ const containerStyle = {
         <>
           <Suspense fallback={<LoadingPage />}>
           <ErrorProvider>
+          <WishlistProvider>
             <Layout>
               <Routes>
               <Route exact path="*" element={<NotFoundPage/>} />
@@ -114,6 +123,7 @@ const containerStyle = {
                 <Route exact path="/login" element={<LogIn />} />
                 <Route exact path="/product-details" element={<ProductDetails />} />
                 <Route exact path="/about" element={<About />} />
+                <Route exact path="/wishlist" element={<WishlistPage />} />
                 {/* <Route
                 path="/app"
                 element={
@@ -124,6 +134,7 @@ const containerStyle = {
               /> */}
               </Routes>
             </Layout>
+            </WishlistProvider>
             </ErrorProvider>
           </Suspense>
         </>
