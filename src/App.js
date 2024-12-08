@@ -9,6 +9,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import NotFoundPage from "./Pages/404/404";
 import { WishlistProvider } from "./Pages/WishList/WishListContext";
 import { CartProvider } from "./Pages/Cart/CartContext";
+const CheckoutPage = lazy(()=>import('./Pages/CheckOut/CheckOutPage'));
 const CartPage = lazy(() => import("./Pages/Cart/CartPage"));
 const WishlistPage = lazy(() => import("./Pages/WishList/WishListPage"));
 const SignUp = lazy(() => import("./Pages/Auth/SignUp"));
@@ -104,6 +105,12 @@ const containerStyle = {
 
       },
       {
+        path:'/checkout',
+        exact:true,
+        element:<CheckoutPage/>
+
+      },
+      {
         path:'/cart',
         exact:true,
         element:<CartPage/>
@@ -134,6 +141,7 @@ const containerStyle = {
                 <Route exact path="/about" element={<About />} />
                 <Route exact path="/wishlist" element={<WishlistPage />} />
                 <Route exact path="/cart" element={<CartPage />} />
+                <Route exact path="/checkout" element={<CheckoutPage />} />
                 {/* <Route
                 path="/app"
                 element={
