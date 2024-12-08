@@ -9,9 +9,10 @@ import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
 import { RemoveRedEye } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import  {useWishlist} from '../WishList/WishListContext'
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
-
 export default function ImageCards({cardData}) {
+  const { wishlist, addToWishlist } = useWishlist();
   const navigate = useNavigate();
   return (
     <Box
@@ -26,7 +27,7 @@ export default function ImageCards({cardData}) {
         marginLeft: "10px",
       }}
     >
-      {cardData.map((card, index) => (
+      {cardData?.map((card, index) => (
         <Card
           key={index}
           sx={{
@@ -61,6 +62,7 @@ export default function ImageCards({cardData}) {
               icon={<FavoriteBorder sx={{ width: 20, height: 20 }} />}
               checkedIcon={<Favorite />}
             />
+            <span  key={card?.id}>
             <Checkbox
               sx={{
                 backgroundColor: "#FFFFFF",
@@ -68,7 +70,9 @@ export default function ImageCards({cardData}) {
               }}
               {...label}
               icon={<RemoveRedEye sx={{ width: 20, height: 20 }} />}
-            />
+              checked={wishlist.some((item) => item.id === card.id)} // Check if the card is in the wishlist
+              onClick={() => addToWishlist(card)} // Add the card to the wishlist
+            /></span>
           </Box>
           {/* Image Section */}
           <Box
