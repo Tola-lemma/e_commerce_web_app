@@ -109,8 +109,8 @@ The app leverages an external API for:
 ![fetch_error](./src/Assets/readme/empty%20wishlist.png)
 # 9.Payment Summary
 ![fetch_error](./src/Assets/readme/payment%20summary.png)
-# 10. Payment Summary
-![fetch_error](./src/Assets/readme/payment%20summary.png)
+# 10. Price Summary
+![fetch_error](./src/Assets/readme/price%20summary.png)
 # 11. Product Details page
 ![fetch_error](./src/Assets/readme/product%20details.png)
 # 12. Order History
