@@ -63,6 +63,7 @@ export const MainHeader = () => {
         localStorage.setItem("orders", "[]");
         localStorage.setItem("token", "");
         localStorage.setItem("formData", "{}");
+        setIsLoggedIn(false)
         setTimeout(() => {
           navigate("/login");
         }, 5000);
