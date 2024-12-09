@@ -65,7 +65,10 @@ use username and password available on the API and test or create one if you wan
   - Allows users to mark products as favorites for future reference.
 - **Retrieve Wishlist**:
   - Displays the user's saved wishlist
+## **7.Search Functionality**
+We can search whatever product we want it suggests what is available in api, then upon clicking it takes us to product details page
 
+![search](./src/Assets/readme/search.png)
 ---
 
 
