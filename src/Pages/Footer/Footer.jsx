@@ -141,7 +141,7 @@ export const Footer = () => {
             variant="h6"
             noWrap
             component="a"
-            href="#"
+            href="/account"
             sx={{
                   display: 'flex',
                   fontFamily: 'Poppins',
