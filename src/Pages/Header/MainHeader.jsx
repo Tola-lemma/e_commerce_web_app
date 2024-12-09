@@ -13,6 +13,7 @@ import mailBag from '../../Assets/userSetting/icon-mallbag.png'
 import Review from '../../Assets/userSetting/Icon-Reviews.png'
 import user from '../../Assets/userSetting/user.png'
 import { ErrorContext } from '../ToastErrorPage/ErrorContext';
+import { useGetAllProductQuery } from '../../Features/productApiSlice';
 const pages = ['Home', 'Contact', 'About', 'Sign Up'];
 export const MainHeader = () => {
   const location = useLocation();
@@ -21,6 +22,7 @@ export const MainHeader = () => {
   const { cart } = useCart();
   const {showSuccess} = useContext(ErrorContext)
   const navigate = useNavigate()
+const localStr =   localStorage.getItem('username')
   useEffect(() => {
     const username = localStorage.getItem('username');
     const loggedIn = !!username; // Boolean conversion
@@ -29,11 +31,42 @@ export const MainHeader = () => {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [iconBackground, setIconBackground] = useState(""); // To control background color
-
+  const {data:products} = useGetAllProductQuery()
   const handleIconClick = (event) => {
     setAnchorEl(event.currentTarget);
     setIconBackground("#DB4444");
   };
+  //search
+  const [searchTerm, setSearchTerm] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+
+  const handleSearchChange = (e) => {
+    const query = e.target.value.toLowerCase();
+    setSearchTerm(query);
+  
+    if (query.trim() === "") {
+      setSuggestions([]);
+      return;
+    }
+  
+    const matches = products?.data
+      .filter((item) => item.title.toLowerCase().includes(query))
+      .slice(0, 5); // Limit to 5 suggestions
+  
+    setSuggestions(matches);
+  };
+  
+  // const cardData = filteredProducts?.map((item) => ({
+  //   id: item.id,
+  //   imageSrc: item.image,
+  //   description: item.description,
+  //   title: item.title,
+  //   category: item.category,
+  //   price: item.price,
+  //   rate: item.rate,
+  //   ratingCount: item.ratingCount,
+  // }));
+  
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -102,7 +135,7 @@ export const MainHeader = () => {
           {/* Navigation Links */}
           <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "center" }}>
             {pages.map((page) =>
-              page === "Sign Up" && isLoggedIn ? null : (
+              page === "Sign Up" &&( isLoggedIn || localStr )? null : (
                 <Button
                   key={page}
                   component={Link}
@@ -138,10 +171,13 @@ export const MainHeader = () => {
               backgroundColor: "#F5F5F5",
               borderRadius: "10px",
               overflow: "hidden",
+              position:"relative"
             }}
           >
             <InputBase
               placeholder="What are you looking for?"
+              value={searchTerm}
+              onChange={handleSearchChange}
               sx={{
                 fontSize: "14px",
                 fontFamily: "Poppins",
@@ -158,8 +194,41 @@ export const MainHeader = () => {
             >
               <Search />
             </IconButton>
+            {suggestions.length > 0 && (
+    <Box
+      sx={{
+        position: "absolute",
+        top: "100%",
+        left: 0,
+        backgroundColor: "white",
+        border: "1px solid #ccc",
+        width: "100%",
+        zIndex: 1000,
+        borderRadius: "4px",
+        maxHeight: "200px",
+        overflowY: "auto",
+      }}
+    >
+      {suggestions.map((item) => (
+        <Box
+          key={item.id}
+          sx={{
+            padding: "8px",
+            cursor: "pointer",
+            "&:hover": { backgroundColor: "#f0f0f0" },
+          }}
+          onClick={() => {
+            setSearchTerm(item.title); // Autofill the selected title
+            setSuggestions([]); // Hide the dropdown
+          }}
+        >
+          {item.title}
+        </Box>
+      ))}
+    </Box>
+  )}
           </Box>
-          {isLoggedIn && (
+          {(isLoggedIn || localStr)&& (
             <Box ml={4}>
               <IconButton onClick={() => navigate("/wishlist")}>
                 <Badge
