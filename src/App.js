@@ -10,6 +10,7 @@ import NotFoundPage from "./Pages/404/404";
 import { WishlistProvider } from "./Pages/WishList/WishListContext";
 import { CartProvider } from "./Pages/Cart/CartContext";
 import ContactPage from "./Pages/ContactPage/ContactPage";
+import MyOrders from "./Pages/UserSetting/MyOrder";
 const CheckoutPage = lazy(()=>import('./Pages/CheckOut/CheckOutPage'));
 const CartPage = lazy(() => import("./Pages/Cart/CartPage"));
 const WishlistPage = lazy(() => import("./Pages/WishList/WishListPage"));
@@ -123,6 +124,12 @@ const containerStyle = {
         element:<ContactPage/>
 
       },
+      {
+        path:'/my-order',
+        exact:true,
+        element:<MyOrders/>
+
+      },
       
     ];
     
@@ -150,6 +157,7 @@ const containerStyle = {
                 <Route exact path="/cart" element={<CartPage />} />
                 <Route exact path="/checkout" element={<CheckoutPage />} />
                 <Route exact path="/contact" element={<ContactPage />} />
+                <Route exact path="/my-order" element={<MyOrders />} />
                 {/* <Route
                 path="/app"
                 element={
