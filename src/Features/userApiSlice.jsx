@@ -42,10 +42,10 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
     // Update user by ID
     updateUserById: builder.mutation({
-      query: ({ id, userData }) => ({
+      query: ({ id,...body }) => ({
         url: `/users/${id}`,
         method: 'PUT',
-        body: userData,
+        body,
       }),
       transformResponse: (baseQueryReturnValue) => baseQueryReturnValue,
       transformErrorResponse: (fetchBaseQueryError) => fetchBaseQueryError,
@@ -57,6 +57,6 @@ export const userApiSlice = apiSlice.injectEndpoints({
 export const {
   useUserLogInMutation,
   useUserSignUpMutation,
-  seGetUserByIdQuery,
+  useGetUserByIdQuery,
   useUpdateUserByIdMutation,
 } = userApiSlice
