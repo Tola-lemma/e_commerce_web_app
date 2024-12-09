@@ -77,8 +77,8 @@ const ContactPage = () => {
         </Grid>
 
         {/* Right Box: Contact Form */}
-        <Grid item xs={12} md={6}>
-          <Paper elevation={1} sx={{ padding: "20px" }}>
+        <Grid item xs={12} md={6} >
+          <Paper elevation={1} sx={{ padding: "20px",height:"100%" }}>
             <form>
               <TextField
                 label="Your Name"
