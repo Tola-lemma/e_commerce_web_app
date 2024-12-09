@@ -14,7 +14,10 @@ This project is a modern e-commerce web application designed to provide an inter
   - **API-based login** for registered users with a token-based system.
   - **LocalStorage-based login** for locally stored account data.
 - **Logout**: Securely clears user session data.
-
+## NB
+Unless creating account or login using fakestore api credential accessing to home page is `protected.`
+use username and password available on the API and test or create one if you want
+[https://fakestoreapi.com/users](https://fakestoreapi.com/users)
 ---
 
 ### **2. User Profile Management**
@@ -84,6 +87,35 @@ The app leverages an external API for:
     - Invalid data formats.
 - **Form Validation**:
   - Prevents incomplete or invalid data submissions in login, signup, and profile update forms.
+## Sample Screenshot
+# 1.API fetch Error (error fetched from API)
+![fetch_error](./src/Assets/readme/1%20API%20FETCH%20ERROR.png)
+# 2.404 page
+![fetch_error](./src/Assets/readme/404.png)
+# 3.Add to cart button is Dynamically changed
+![fetch_error](./src/Assets/readme/add%20to%20cart%20button.png)
+# 4. Browse by category button is dynamic (fetch respective data dynamically)
+![fetch_error](./src/Assets/readme/browse%20by%20category.png)
+# 5. Category fetched from api dynamically linked with browse by categories button fetch respective data
+![fetch_error](./src/Assets/readme/browse%20category%20list.png)
+# 6.Cart Page
+![fetch_error](./src/Assets/readme/cart%20with%20product.png)
+# 7.carts with empty product
+![fetch_error](./src/Assets/readme/empty%20cart.png)
+# 8.Empty Wish List (add to wish list using heart icon ,remove them by just click then again)
+![fetch_error](./src/Assets/readme/empty%20wishlist.png)
+# 9.Payment Summary
+![fetch_error](./src/Assets/readme/payment%20summary.png)
+# 10. Payment Summary
+![fetch_error](./src/Assets/readme/payment%20summary.png)
+# 11. Product Details page
+![fetch_error](./src/Assets/readme/product%20details.png)
+# 12. Order History
+![fetch_error](./src/Assets/readme/ordered%20history.png)
+# 13.Profile view directly fetched from api 
+![fetch_error](./src/Assets/readme/profile%20view.png)
+# 14.Skeleton placeholder until fetching the actaul data 
+![fetch_error](./src/Assets/readme/skeletin.png)
 
 ---
 
