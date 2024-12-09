@@ -38,34 +38,35 @@ const localStr =   localStorage.getItem('username')
   };
   //search
   const [searchTerm, setSearchTerm] = useState("");
-  const [suggestions, setSuggestions] = useState([]);
+  const [filteredCards, setFilteredCards] = useState([]);
 
+ const cardData = products?.data.map((item) => ({
+    id: item.id,
+    imageSrc: item.image,
+    description: item.description,
+    title: item.title,
+    category: item.category,
+    price: item.price,
+    rate: item.rate,
+    ratingCount: item.ratingCount,
+  }));
   const handleSearchChange = (e) => {
     const query = e.target.value.toLowerCase();
     setSearchTerm(query);
   
     if (query.trim() === "") {
-      setSuggestions([]);
+      setFilteredCards([]); // Clear suggestions when input is empty
       return;
     }
   
-    const matches = products?.data
+    const matches = cardData
       .filter((item) => item.title.toLowerCase().includes(query))
       .slice(0, 5); // Limit to 5 suggestions
   
-    setSuggestions(matches);
+    setFilteredCards(matches);
   };
   
-  // const cardData = filteredProducts?.map((item) => ({
-  //   id: item.id,
-  //   imageSrc: item.image,
-  //   description: item.description,
-  //   title: item.title,
-  //   category: item.category,
-  //   price: item.price,
-  //   rate: item.rate,
-  //   ratingCount: item.ratingCount,
-  // }));
+ 
   
 
   const handleClose = () => {
@@ -135,7 +136,7 @@ const localStr =   localStorage.getItem('username')
           {/* Navigation Links */}
           <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "center" }}>
             {pages.map((page) =>
-              page === "Sign Up" &&( isLoggedIn || localStr )? null : (
+              page === "Sign Up" && (isLoggedIn || localStr) ? null : (
                 <Button
                   key={page}
                   component={Link}
@@ -171,7 +172,6 @@ const localStr =   localStorage.getItem('username')
               backgroundColor: "#F5F5F5",
               borderRadius: "10px",
               overflow: "hidden",
-              position:"relative"
             }}
           >
             <InputBase
@@ -194,41 +194,8 @@ const localStr =   localStorage.getItem('username')
             >
               <Search />
             </IconButton>
-            {suggestions.length > 0 && (
-    <Box
-      sx={{
-        position: "absolute",
-        top: "100%",
-        left: 0,
-        backgroundColor: "white",
-        border: "1px solid #ccc",
-        width: "100%",
-        zIndex: 1000,
-        borderRadius: "4px",
-        maxHeight: "200px",
-        overflowY: "auto",
-      }}
-    >
-      {suggestions.map((item) => (
-        <Box
-          key={item.id}
-          sx={{
-            padding: "8px",
-            cursor: "pointer",
-            "&:hover": { backgroundColor: "#f0f0f0" },
-          }}
-          onClick={() => {
-            setSearchTerm(item.title); // Autofill the selected title
-            setSuggestions([]); // Hide the dropdown
-          }}
-        >
-          {item.title}
-        </Box>
-      ))}
-    </Box>
-  )}
           </Box>
-          {(isLoggedIn || localStr)&& (
+          {(isLoggedIn || localStr) && (
             <Box ml={4}>
               <IconButton onClick={() => navigate("/wishlist")}>
                 <Badge
@@ -344,6 +311,46 @@ const localStr =   localStorage.getItem('username')
           </Menu>
         </Toolbar>
       </Container>
+      <Box sx={{ position: "relative", width: "400px" }}>
+        <Box>
+          {filteredCards.length > 0 && (
+            <Box
+              sx={{
+                position: "absolute",
+                top: -15,
+                left: 880,
+                backgroundColor: "white",
+                border: "none",
+                width: "100%",
+                zIndex: 1000,
+                borderRadius: "4px",
+                maxHeight: "200px",
+                color: "black",
+                fontFamily: "Poppins",
+                overflowY: "auto",
+              }}
+            >
+              {filteredCards.map((item) => (
+                <Box
+                  key={item.id}
+                  sx={{
+                    padding: "8px",
+                    cursor: "pointer",
+                    "&:hover": { backgroundColor: "#f0f0f0" },
+                  }}
+                  onClick={() => {
+                    setSearchTerm(item.title); // Autofill the selected title
+                    setFilteredCards([]); // Clear dropdown
+                      navigate("/product-details", { state: { product: item  } })
+                  }}
+                >
+                  {item.title}
+                </Box>
+              ))}
+            </Box>
+          )}
+        </Box>
+      </Box>
     </AppBar>
   );
 }
