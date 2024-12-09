@@ -33,13 +33,12 @@ const MyProfile = () => {
         }
         else if (!token) {
             // Update from localStorage if no token
-            const Uname = localStorage.getItem('username')
             const localData = JSON.parse(localStorage.getItem("formData"));
             if (localData) {
               setProfileData({
                 firstName: localData?.name?.split(" ")[0] || "N/A",
                 lastName: localData?.name?.split(" ")[1] || "N/A",
-                username: Uname || "N/A",
+                username: localStorage.getItem('username') || "N/A",
                 email: localData?.email || "N/A",
                 address: localData?.address || "N/A",
                 phone: localData?.phone || "N/A",
