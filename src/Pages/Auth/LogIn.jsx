@@ -45,6 +45,7 @@ const LogIn = () => {
         const result = await userLogIn({ username, password });
         if (result?.data) {
           localStorage.setItem('username', username);
+          localStorage.setItem('token',result?.data.token)
           showSuccess('Successfully logged in .... Redirecting to home page');
           setTimeout(() => {
                window.location.replace("/home");
