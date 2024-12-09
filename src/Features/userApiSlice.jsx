@@ -29,10 +29,34 @@ export const userApiSlice = apiSlice.injectEndpoints({
                   },
                   invalidatesTags:['e-commerce']
             }),
+             // Get user by ID
+    getUserById: builder.query({
+      query: (id) => ({
+        url: `/users/${id}`,
+        method: 'GET',
+      }),
+      transformResponse: (baseQueryReturnValue) => baseQueryReturnValue,
+      transformErrorResponse: (fetchBaseQueryError) => fetchBaseQueryError,
+      providesTags: (result, error, id) => [{ type: 'users', id }],
+    }),
+
+    // Update user by ID
+    updateUserById: builder.mutation({
+      query: ({ id, userData }) => ({
+        url: `/users/${id}`,
+        method: 'PUT',
+        body: userData,
+      }),
+      transformResponse: (baseQueryReturnValue) => baseQueryReturnValue,
+      transformErrorResponse: (fetchBaseQueryError) => fetchBaseQueryError,
+      invalidatesTags: (result, error, { id }) => [{ type: 'users', id }],
+    }),
             //more
       })
 })
 export const {
   useUserLogInMutation,
-  useUserSignUpMutation
+  useUserSignUpMutation,
+  seGetUserByIdQuery,
+  useUpdateUserByIdMutation,
 } = userApiSlice
