@@ -156,7 +156,7 @@ export const Footer = () => {
             variant="h7"
             noWrap
             component="a"
-            href="#"
+            href="/account"
             sx={{
                   display: 'flex',
                   fontFamily: 'Poppins',
@@ -186,7 +186,7 @@ export const Footer = () => {
             variant="h7"
             noWrap
             component="a"
-            href="#"
+            href="/cart"
             sx={{
                   display: 'flex',
                   fontFamily: 'Poppins',
@@ -201,7 +201,7 @@ export const Footer = () => {
             variant="h7"
             noWrap
             component="a"
-            href="#"
+            href="/wishlist"
             sx={{
                   display: 'flex',
                   fontFamily: 'Poppins',
@@ -216,7 +216,7 @@ export const Footer = () => {
             variant="h7"
             noWrap
             component="a"
-            href="#"
+            href="/checkout"
             sx={{
                   display: 'flex',
                   fontFamily: 'Poppins',
@@ -232,7 +232,7 @@ export const Footer = () => {
             variant="h6"
             noWrap
             component="a"
-            href="#"
+            href="/home"
             sx={{
                   display: 'flex',
                   fontFamily: 'Poppins',
@@ -292,7 +292,7 @@ export const Footer = () => {
             variant="h7"
             noWrap
             component="a"
-            href="#"
+            href="/contact"
             sx={{
                   display: 'flex',
                   fontFamily: 'Poppins',
