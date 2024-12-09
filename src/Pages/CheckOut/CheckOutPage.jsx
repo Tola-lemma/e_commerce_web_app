@@ -17,11 +17,12 @@ import {
   Fade,
 } from "@mui/material";
 import CustomBreadcrumbs from "../ReUsableComponents/BreadCrumb";
-import { useLocation } from "react-router-dom";
+import {  useLocation, useNavigate } from "react-router-dom";
 import { ErrorContext } from "../ToastErrorPage/ErrorContext";
 
 const CheckoutPage = () => {
       const location = useLocation();
+      const navigate = useNavigate()
   const { cart, subtotal, shipping, total } = location.state || {};
   const {showSuccess, showError} = useContext(ErrorContext)
   const [billingDetails, setBillingDetails] = useState({
@@ -78,7 +79,7 @@ const CheckoutPage = () => {
       showSuccess("Order placed successfully!");
       setModalOpen(false);
       setTimeout(() => {
-        window.location.replace("/home");
+        navigate("/home");
       }, 5000);
     } else {
       showError("No items in the cart to place an order.");

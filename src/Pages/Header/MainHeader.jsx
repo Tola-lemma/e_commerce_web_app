@@ -64,7 +64,7 @@ export const MainHeader = () => {
         localStorage.setItem("token", "");
         localStorage.setItem("formData", "{}");
         setTimeout(() => {
-          window.location.replace("/login");
+          navigate("/login");
         }, 5000);
         break;
       default:

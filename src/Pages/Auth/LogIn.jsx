@@ -5,12 +5,13 @@ import { ErrorContext } from '../ToastErrorPage/ErrorContext';
 import { useUserLogInMutation } from '../../Features/userApiSlice';
 import sideImage from '../../Assets/Side Image.png';
 import GoogleIcon from '../../Assets/Icon-Google.png';
+import { useNavigate } from 'react-router-dom';
 
 const LogIn = () => {
   const formDataFrmSignUp = JSON.parse(localStorage.getItem('formData'));
   const [userLogIn] = useUserLogInMutation();
   const { showSuccess, showError } = useContext(ErrorContext);
-
+   const navigate =useNavigate()
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -37,7 +38,7 @@ const LogIn = () => {
       localStorage.setItem('username', username);
       showSuccess('Successfully logged in .... Redirecting to home page');
       setTimeout(() => {
-           window.location.replace("/home");
+           navigate("/home");
         }, 5000);
     } else {
       try {
@@ -48,7 +49,7 @@ const LogIn = () => {
           localStorage.setItem('token',result?.data.token)
           showSuccess('Successfully logged in .... Redirecting to home page');
           setTimeout(() => {
-               window.location.replace("/home");
+               navigate("/home");
             }, 5000);
         } else {
           showError(result?.error?.data || 'Invalid credentials');
