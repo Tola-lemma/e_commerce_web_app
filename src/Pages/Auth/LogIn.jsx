@@ -1,14 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
-import { useNavigate } from 'react-router-dom'; // Navigate for redirection
 import { ErrorContext } from '../ToastErrorPage/ErrorContext';
 import { useUserLogInMutation } from '../../Features/userApiSlice';
 import sideImage from '../../Assets/Side Image.png';
 import GoogleIcon from '../../Assets/Icon-Google.png';
 
 const LogIn = () => {
-  const navigate = useNavigate();
   const formDataFrmSignUp = JSON.parse(localStorage.getItem('formData'));
   const [userLogIn] = useUserLogInMutation();
   const { showSuccess, showError } = useContext(ErrorContext);
@@ -37,8 +35,10 @@ const LogIn = () => {
       password === formDataFrmSignUp.password
     ){
       localStorage.setItem('username', username);
-      showSuccess('Successfully logged in ....  Redirecting to home page');
-      navigate('/home');
+      showSuccess('Successfully logged in .... Redirecting to home page');
+      setTimeout(() => {
+           window.location.replace("/home");
+        }, 5000);
     } else {
       try {
         // 2. Validate using API
@@ -46,7 +46,9 @@ const LogIn = () => {
         if (result?.data) {
           localStorage.setItem('username', username);
           showSuccess('Successfully logged in .... Redirecting to home page');
-          navigate('/home');
+          setTimeout(() => {
+               window.location.replace("/home");
+            }, 5000);
         } else {
           showError(result?.error?.data || 'Invalid credentials');
         }
