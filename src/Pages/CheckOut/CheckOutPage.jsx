@@ -64,10 +64,25 @@ const CheckoutPage = () => {
   };
 
   const handlePlaceOrder = () => {
-      
-    showSuccess('Payment is placed Successfully');
-    // Close modal after submission
-    setModalOpen(false);
+    if (cart && cart.length > 0) {
+      const previousOrders = JSON.parse(localStorage.getItem("orders")) || [];
+      const newOrder = {
+        id: Date.now(),
+        cart,
+        total,
+        date: new Date().toLocaleString(),
+      };
+  
+      localStorage.setItem("orders", JSON.stringify([...previousOrders, newOrder]));
+  
+      showSuccess("Order placed successfully!");
+      setModalOpen(false);
+      setTimeout(() => {
+        window.location.replace("/home");
+      }, 5000);
+    } else {
+      showError("No items in the cart to place an order.");
+    }
   };
   const breadcrumbsItems = [
       { name: "Product" },
