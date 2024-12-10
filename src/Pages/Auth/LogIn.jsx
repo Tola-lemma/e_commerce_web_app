@@ -39,7 +39,7 @@ const LogIn = () => {
       showSuccess('Successfully logged in .... Redirecting to home page');
       setTimeout(() => {
            navigate("/home");
-        }, 5000);
+        }, 3000);
     } else {
       try {
         // 2. Validate using API
@@ -50,7 +50,7 @@ const LogIn = () => {
           showSuccess('Successfully logged in .... Redirecting to home page');
           setTimeout(() => {
                navigate("/home");
-            }, 5000);
+            }, 3000);
         } else {
           showError(result?.error?.data || 'Invalid credentials');
         }
