@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 
 const MyProfile = () => {
       const [profileData, setProfileData] = useState({
-        firstName: "",
-        lastName: "",
+        firstname: "",
+        lastname: "",
         username: "",
         email: "",
         address: "",
@@ -35,18 +35,19 @@ const MyProfile = () => {
             // Update from localStorage if no token
             const localData = JSON.parse(localStorage.getItem("formData"));
             if (localData) {
+              // const [firstname = "N/A", lastname = "N/A"] = typeof localData.name === "string" ? localData.name.split(" ") : [];
               setProfileData({
-                firstName: localData?.name?.split(" ")[0] || "N/A",
-                lastName: localData?.name?.split(" ")[1] || "N/A",
-                username: localStorage.getItem('username') || "N/A",
-                email: localData?.email || "N/A",
-                address: localData?.address || "N/A",
-                phone: localData?.phone || "N/A",
+                  firstname: localData?.name.firstname,
+                  lastname: localData?.name.lastname,
+                  username: localStorage.getItem("username") || "N/A",
+                  email: localData?.email || "N/A",
+                  address: localData?.address || "N/A",
+                  phone: localData?.phone || "N/A",
               });
             }
           }
       }, [token, isSuccess, apiProfile]);
-    
+    console.log("pd",profileData);
       return (
         <Box sx={{ padding: "20px", maxWidth: "800px", margin: "auto" }}>
           <Typography variant="h4" gutterBottom>
@@ -57,11 +58,11 @@ const MyProfile = () => {
               <TableBody>
                 <TableRow>
                   <TableCell variant="head" sx={{ fontWeight: "bold" }}>First Name</TableCell>
-                  <TableCell>{profileData.firstName}</TableCell>
+                  <TableCell>{profileData.firstname}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell variant="head" sx={{ fontWeight: "bold" }}>Last Name</TableCell>
-                  <TableCell>{profileData.lastName}</TableCell>
+                  <TableCell>{profileData.lastname}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell variant="head" sx={{ fontWeight: "bold" }}>Username</TableCell>
