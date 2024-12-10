@@ -12,6 +12,7 @@ import { CartProvider } from "./Pages/Cart/CartContext";
 import ContactPage from "./Pages/ContactPage/ContactPage";
 import MyOrders from "./Pages/UserSetting/MyOrder";
 import ManageAccount from "./Pages/UserSetting/MyAccount";
+import PrivacyPolicy from "./Pages/Policy and Terms of use/privacyPloicy";
 const CheckoutPage = lazy(()=>import('./Pages/CheckOut/CheckOutPage'));
 const CartPage = lazy(() => import("./Pages/Cart/CartPage"));
 const WishlistPage = lazy(() => import("./Pages/WishList/WishListPage"));
@@ -137,6 +138,12 @@ const containerStyle = {
         element:<ManageAccount/>
 
       },
+      {
+        path:'/privacy policy',
+        exact:true,
+        element:<PrivacyPolicy/>
+
+      },
       
     ];
     
@@ -166,6 +173,7 @@ const containerStyle = {
                 <Route exact path="/contact" element={<ContactPage />} />
                 <Route exact path="/my-order" element={<MyOrders />} />
                 <Route exact path="/account" element={<ManageAccount />} />
+                <Route exact path="/privacy policy" element={<PrivacyPolicy />} />
                 {/* <Route
                 path="/app"
                 element={
