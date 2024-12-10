@@ -1,12 +1,15 @@
 import React from "react";
 import { Box, Stack, Breadcrumbs, Link, Typography } from "@mui/material";
 import { NavigateNext } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
-const CustomBreadcrumbs = ({ items, onClick }) => {
-  const handleClick = (event, href) => {
-    // event.preventDefault();
-    if (onClick) {
-      onClick(href);
+const CustomBreadcrumbs = ({ items }) => {
+  const navigate = useNavigate();
+
+  const handleNavigation = (event, href) => {
+    event.preventDefault(); // Prevent the default link behavior
+    if (href) {
+      navigate(href); // Navigate to the specified route
     }
   };
 
@@ -21,8 +24,8 @@ const CustomBreadcrumbs = ({ items, onClick }) => {
           <Link
             underline="hover"
             color="inherit"
-            href="/home"
-            onClick={(e) => handleClick(e, "/home")}
+            onClick={(e) => handleNavigation(e, "/home")}
+            component="button"
           >
             Home
           </Link>
@@ -34,8 +37,8 @@ const CustomBreadcrumbs = ({ items, onClick }) => {
                 key={index}
                 underline="hover"
                 color="inherit"
-                href={item.href}
-                onClick={(e) => handleClick(e, item.href)}
+                onClick={(e) => handleNavigation(e, item.href)}
+                component="button"
               >
                 {item.name}
               </Link>
