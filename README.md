@@ -119,6 +119,12 @@ The app leverages an external API for:
 ![fetch_error](./src/Assets/readme/profile%20view.png)
 # 14.Skeleton placeholder until fetching the actaul data 
 ![fetch_error](./src/Assets/readme/skeletin.png)
+# 15.Terms of Use page 
+![fetch_error](./src/Assets/readme/tu.png)
+# 16.Privacy Policy page 
+![fetch_error](./src/Assets/readme/pp.png)
+# 17.FAQ page 
+![fetch_error](./src/Assets/readme/faq.png)
 
 ---
 
