@@ -12,6 +12,7 @@ import SkeletonCategory from '../ReUsableComponents/ReUsableCategorySkeleton.jsx
 import LoadingSkeleton from '../ReUsableComponents/FixedTextSkeleton.jsx';
 import { HashLink as Link } from "react-router-hash-link";
 import { useNavigate } from 'react-router-dom';
+import { Explore } from './Explore.jsx';
 const Home = () => {
   const [page, setPage] = useState(1); // Start from page 1
   const cardsPerPage = 4; // Number of cards to display at once
@@ -501,6 +502,7 @@ const handlePrev = () => {
           </h1>
         )}
       </Box>
+      <Explore/>
     </>
   );
 }
