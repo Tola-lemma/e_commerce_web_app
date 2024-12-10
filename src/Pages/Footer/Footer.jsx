@@ -277,14 +277,16 @@ export const Footer = () => {
            p={"3px 0"}
             variant="h7"
             noWrap
-            component="a"
-            href="#"
+            onClick={()=>navigate('/terms of use')}
+            // component="a"
+            // href="#"
             sx={{
                   display: 'flex',
                   fontFamily: 'Poppins',
                   fontWeight: 400,
                   color: 'white',
                   textDecoration: 'none',
+                  cursor:"pointer"
                 }}>
               Terms Of Use
             </Typography>
