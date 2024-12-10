@@ -119,8 +119,9 @@ const localStr =   localStorage.getItem('username')
           <Typography
             variant="h6"
             noWrap
-            component="a"
-            href="/home"
+            onClick={()=>navigate('/home')}
+            // component="a"
+            // href="/home"
             sx={{
               mr: 2,
               display: "flex",
@@ -128,6 +129,7 @@ const localStr =   localStorage.getItem('username')
               fontWeight: 700,
               color: "black",
               textDecoration: "none",
+              cursor:"pointer"
             }}
           >
             Exclusive
