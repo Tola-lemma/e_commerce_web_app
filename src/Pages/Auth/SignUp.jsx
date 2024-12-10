@@ -154,7 +154,7 @@ const SignUp = () => {
       <img src={GoogleIcon} alt='google' width={20} height={20}/> <span> <span style={{color:"white"}}> -- </span></span>  Sign Up With Google
       </Button>
       <Typography variant="body2" color="initial" sx={{textAlign:"center",fontFamily:"Poppins",marginTop:4}}>
-        Already have an Account?  <a href='/login' style={{color:"black",fontWeight:"bold"}}>Log In  </a>
+        Already have an Account?  <span onClick={()=> navigate("/login")} style={{color:"black",textDecoration:"underline",cursor:"pointer",fontWeight:"bold"}}>Log In  </span>
       </Typography>
     </Box>
       </Box>

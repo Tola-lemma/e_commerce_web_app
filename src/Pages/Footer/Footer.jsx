@@ -4,7 +4,9 @@ import React from 'react'
 import qrcode from '../../Assets/Qr Code.png'
 import playstore from '../../Assets/GooglePlay.png'
 import appstore from '../../Assets/AppStore.png'
+import { useNavigate } from 'react-router-dom'
 export const Footer = () => {
+  const navigate =useNavigate()
   return (
       <Box  sx={{backgroundColor:"black",color:"white",height:440,alignContent:"center"}}>
       <Box sx={{display:"flex",justifyContent:"space-evenly", marginTop:"3rem"}}>
@@ -12,14 +14,14 @@ export const Footer = () => {
            <Typography
             variant="h6"
             noWrap
-            component="a"
-            href="/home"
+            onClick={()=>navigate("/home")}
             sx={{
                   display: 'flex',
                   fontFamily: 'Poppins',
                   fontWeight: 700,
                   color: 'white',
                   textDecoration: 'none',
+                  cursor:"pointer"
                 }}>
               Exclusive
             </Typography>
@@ -140,14 +142,16 @@ export const Footer = () => {
            <Typography
             variant="h6"
             noWrap
-            component="a"
-            href="/account"
+           onClick={()=>navigate("/account")}
+            // component="a"
+            // href="/account"
             sx={{
                   display: 'flex',
                   fontFamily: 'Poppins',
                   fontWeight: 700,
                   color: 'white',
                   textDecoration: 'none',
+                  cursor:"pointer"
                 }}>
               Account
             </Typography>
@@ -155,14 +159,16 @@ export const Footer = () => {
            p={"3px 0"}
             variant="h7"
             noWrap
-            component="a"
-            href="/account"
+            onClick={()=>navigate('/account')}
+            // component="a"
+            // href="/account"
             sx={{
                   display: 'flex',
                   fontFamily: 'Poppins',
                   fontWeight: 400,
                   color: 'white',
                   textDecoration: 'none',
+                  cursor:"pointer"
                 }}>
               My Account
             </Typography>
@@ -185,14 +191,16 @@ export const Footer = () => {
            p={"3px 0"}
             variant="h7"
             noWrap
-            component="a"
-            href="/cart"
+            onClick={()=>navigate('/cart')}
+            // component="a"
+            // href="/cart"
             sx={{
                   display: 'flex',
                   fontFamily: 'Poppins',
                   fontWeight: 400,
                   color: 'white',
                   textDecoration: 'none',
+                  cursor:"pointer"
                 }}>
               Cart
             </Typography>
@@ -200,14 +208,16 @@ export const Footer = () => {
            p={"3px 0"}
             variant="h7"
             noWrap
-            component="a"
-            href="/wishlist"
+            onClick={()=>navigate('/wishlist')}
+            // component="a"
+            // href="/wishlist"
             sx={{
                   display: 'flex',
                   fontFamily: 'Poppins',
                   fontWeight: 400,
                   color: 'white',
                   textDecoration: 'none',
+                  cursor:"pointer"
                 }}>
               WishList
             </Typography>
@@ -215,14 +225,16 @@ export const Footer = () => {
            p={"3px 0"}
             variant="h7"
             noWrap
-            component="a"
-            href="/checkout"
+            onClick={()=>navigate('/checkout')}
+            // component="a"
+            // href="/checkout"
             sx={{
                   display: 'flex',
                   fontFamily: 'Poppins',
                   fontWeight: 400,
                   color: 'white',
                   textDecoration: 'none',
+                  cursor:"pointer"
                 }}>
               Shop
             </Typography>
@@ -231,14 +243,16 @@ export const Footer = () => {
            <Typography
             variant="h6"
             noWrap
-            component="a"
-            href="/home"
+            onClick={()=>navigate('/home')}
+            // component="a"
+            // href="/home"
             sx={{
                   display: 'flex',
                   fontFamily: 'Poppins',
                   fontWeight: 700,
                   color: 'white',
                   textDecoration: 'none',
+                  cursor:"pointer"
                 }}>
               Quick Link
             </Typography>
@@ -291,14 +305,16 @@ export const Footer = () => {
            p={"3px 0"}
             variant="h7"
             noWrap
-            component="a"
-            href="/contact"
+            onClick={()=>navigate('/contact')}
+            // component="a"
+            // href="/contact"
             sx={{
                   display: 'flex',
                   fontFamily: 'Poppins',
                   fontWeight: 400,
                   color: 'white',
                   textDecoration: 'none',
+                  cursor:"pointer"
                 }}>
               Contact
             </Typography>
