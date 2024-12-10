@@ -28,7 +28,7 @@ const ManageAccount = () => {
       { name: "My Account"}
 ]
 const token = localStorage.getItem("token"); // Retrieve token
-      const apiUsername = token ? JSON.parse(atob(token.split(".")[1])).user : null;
+      const apiUsername = token ? JSON.parse(atob(token?.split(".")[1])).user : null;
   return (
     <Box mt={4} ml={3}>
       <Box sx={{ display: "flex", justifyContent: "space-between" }} mb={4}>
@@ -103,7 +103,7 @@ const EditProfile = () => {
 const {showError,showSuccess} = useContext(ErrorContext)
   const token = localStorage.getItem("token"); 
   const [updateUserById, { isLoading}] = useUpdateUserByIdMutation();
-  const userId = token ? JSON.parse(atob(token.split(".")[1])).sub : null; // Decode user ID from token
+  const userId = token ? JSON.parse(atob(token?.split(".")[1])).sub : null; // Decode user ID from token
  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -112,6 +112,30 @@ const {showError,showSuccess} = useContext(ErrorContext)
 
   const handleSaveChanges = async (e) => {
       e.preventDefault();
+      const requiredFields = [
+        { field: "firstName", label: "First Name" },
+        { field: "lastName", label: "Last Name" },
+        { field: "username", label: "Username" },
+        { field: "email", label: "Email" },
+        { field: "phone", label: "Phone Number" },
+      ];
+    
+      const emptyFields = requiredFields.filter(
+        ({ field }) => !profileData[field].trim()
+      );
+    
+      if (emptyFields.length > 0) {
+        const errorMessage = `Please fill out the following fields: ${emptyFields
+          .map(({ label }) => label)
+          .join(", ")}`;
+        showError(errorMessage);
+        return; 
+      }
+    
+      if (profileData.newPassword && profileData.newPassword !== profileData.confirmPassword) {
+        showError("New Password and Confirm Password do not match.");
+        return; 
+      }
       if (token) {
             // Submit data via API
             try {
@@ -153,6 +177,7 @@ const {showError,showSuccess} = useContext(ErrorContext)
                   password:profileData.newPassword
                 };
         localStorage.setItem("formData", JSON.stringify(userData));
+        localStorage.setItem('username',profileData.username)
         showSuccess("Profile updated successfully!.");
       }
   };
@@ -181,6 +206,7 @@ const {showError,showSuccess} = useContext(ErrorContext)
           <TextField
             label="First Name"
             fullWidth
+            required
             name="firstName"
             value={profileData.firstName}
             onChange={handleInputChange}
@@ -190,6 +216,7 @@ const {showError,showSuccess} = useContext(ErrorContext)
           <TextField
             label="Last Name"
             fullWidth
+            required
             name="lastName"
             value={profileData.lastName}
             onChange={handleInputChange}
@@ -202,11 +229,13 @@ const {showError,showSuccess} = useContext(ErrorContext)
             name="username"
             value={profileData.username}
             onChange={handleInputChange}
+            required
           />
         </Grid>
         <Grid item xs={6}>
           <TextField
             label="Phone Number"
+            required
             fullWidth
             name="phone"
             value={profileData.phone}
@@ -217,6 +246,7 @@ const {showError,showSuccess} = useContext(ErrorContext)
           <TextField
             label="Email"
             fullWidth
+            required
             name="email"
             value={profileData.email}
             onChange={handleInputChange}
