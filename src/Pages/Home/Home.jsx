@@ -11,10 +11,12 @@ import ImageCards from '../ReUsableComponents/ReusableCard.jsx'
 import SkeletonCategory from '../ReUsableComponents/ReUsableCategorySkeleton.jsx';
 import LoadingSkeleton from '../ReUsableComponents/FixedTextSkeleton.jsx';
 import { HashLink as Link } from "react-router-hash-link";
+import { useNavigate } from 'react-router-dom';
 const Home = () => {
   const [page, setPage] = useState(1); // Start from page 1
   const cardsPerPage = 4; // Number of cards to display at once
   const [viewAll, setViewAll] = useState(false);
+  const navigate = useNavigate()
   const { data: categories, error, isLoading }  = useGetProductCategoryQuery();
   const {data:products,isLoading:isLoadingProduct, error:errorProduct } = useGetAllProductQuery()
   const [selectedCategory, setSelectedCategory] = useState("electronics");
@@ -215,8 +217,9 @@ const handlePrev = () => {
             </SplideSlide>
           </Splide>
           <Typography
-            component="a"
-            href="/home"
+             onClick={()=>navigate('/home')}
+            // component="a"
+            // href="/home"
             sx={{
               color: "white",
               textAlign: "center",
