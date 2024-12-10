@@ -47,7 +47,6 @@ const MyProfile = () => {
             }
           }
       }, [token, isSuccess, apiProfile]);
-    console.log("pd",profileData);
       return (
         <Box sx={{ padding: "20px", maxWidth: "800px", margin: "auto" }}>
           <Typography variant="h4" gutterBottom>
