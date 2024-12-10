@@ -50,7 +50,11 @@ export const Explore = () => {
         mt={6}
         mb={6}
       >
-            <img src={exploreImage} alt='explore' style={{cursor:"pointer"}} onClick={()=>navigate('/home')}/>
+            <img width={1170} height={500} src={exploreImage} alt='explore'  style={{
+    cursor: "pointer",
+    display: "block",
+    margin: "0 auto", 
+  }}  onClick={()=>navigate('/home')}/>
              {isLoadingProduct ? (
           <LoadingSkeleton />
         ) : (
